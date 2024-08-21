@@ -19,5 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "extension/**/*"],
+  "exclude": ["node_modules", "dist", "extension/content/dist/**/*"]
 }

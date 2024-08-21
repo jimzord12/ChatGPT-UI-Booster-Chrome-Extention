@@ -7,7 +7,9 @@
     "dev": "tsc && vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "content-script": "tsc src/background/content-script.ts --target ES2020 --module ESNext --outDir extension/webpageModifiers"
+    "content-script": "tsc src/background/content-script.ts --target ES2020 --module ESNext --outDir extension/webpageModifiers",
+    "parcel-build": "parcel build extension/content/content-script.ts --dist-dir extension/content/dist",
+    "parcel-dev": "parcel watch src/content-script.js --out-dir dist --out-file content-script.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
@@ -20,6 +22,7 @@
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "globals": "^15.9.0",
+    "parcel": "^2.12.0",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",

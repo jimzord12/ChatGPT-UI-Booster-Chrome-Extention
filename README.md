@@ -77,3 +77,25 @@ Additionally, the required logic is encapulated inside a custom-made plugin:
 ```
 vite_plugins/custom-chrome-ext-plugin
 ```
+
+### Content Script (Web Page Modifier Script)
+
+_what is a [content-script.js (Google Extensions Docs)](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts)?_
+
+_In a nutshell, it allows us to manipulate Web Pages. As in our case we want to boost the ChatGPT UI functionalities, this is ideal._
+
+We shall consider this script as a different part of the Extension, therefore we need to setup a different environment for this `content-script.js` file.
+
+Thankfully, we can use [Parcel](https://parceljs.org/) a JS Bundler which will allow us to write using TypeScript and all the modern features with almost no configurations.
+
+Start by installing it:
+
+```
+pnpm install --save-dev parcel
+```
+
+Afterwards, we only to add a single run script to our `package.json` file:
+
+```
+"parcel-build": "parcel build extension/content/content-script.ts --dist-dir extension/content/dist"
+```
