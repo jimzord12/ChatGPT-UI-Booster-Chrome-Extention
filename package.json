@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "content-script": "tsc src/background/content-script.ts --target ES2020 --module ESNext --outDir extension/webpageModifiers",
-    "parcel-build": "parcel build extension/content/content-script.ts --dist-dir extension/content/dist",
+    "parcel-build-content": "parcel build extension/content/content-script.ts --dist-dir extension/dist/content && parcel build extension/content/content-script.css --dist-dir extension/dist/content",
     "parcel-dev": "parcel watch src/content-script.js --out-dir dist --out-file content-script.js"
   },
   "devDependencies": {

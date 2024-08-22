@@ -1,0 +1,15 @@
+#sidebar {
+  transition: width 0.5s ease, transform 0.5s ease;
+}
+
+#sidebar-content {
+  transition: width 0.5s ease, transform 0.5s ease;
+}
+
+#sidebar.closed {
+  transform: translateX(-100%);
+}
+
+#sidebar-content.closed {
+  transform: translateX(-100%);
+}

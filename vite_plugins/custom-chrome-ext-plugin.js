@@ -8,10 +8,15 @@ import {
 import { resolve } from "path";
 import { copyFileSync, mkdirSync } from "fs";
 
+import { popupOutputPath } from "./outputPaths";
+
 export const chromeExtPlugin = {
-  name: "rename-html-plugin",
-  writeBundle() {
-    const outputDir = resolve(__dirname, "dist");
+  name: "custom-chrome-extention-plugin",
+  closeBundle() {
+    const absPath = resolve(__dirname, "../");
+    console.log("Abs path: ", absPath);
+
+    const outputDir = resolve(absPath, "dist");
     const assetsDir = resolve(outputDir, "assets");
 
     // Rename index.html to popup.html
@@ -22,6 +27,8 @@ export const chromeExtPlugin = {
       renameSync(oldFile, newFile);
       console.log("1. Renamed index.html to popup.html");
     } else {
+      console.log("Old file: ", oldFile);
+      console.log("New file: ", newFile);
       console.error("index.html not found, renaming skipped.");
       return;
     }
@@ -56,6 +63,7 @@ export const chromeExtPlugin = {
     const htmlFile = resolve(outputDir, "popup.html");
     let htmlContent = readFileSync(htmlFile, "utf-8");
 
+    // Chrome Extentions want "./path" not "/path" as Vite uses
     htmlContent = htmlContent
       .replace(/\/assets\/index-.*\.js/g, "./assets/popup.js")
       .replace(/\/assets\/index-.*\.css/g, "./assets/popup.css");
@@ -64,7 +72,7 @@ export const chromeExtPlugin = {
     console.log("Updated HTML file to reference popup.js and popup.css");
 
     // Copy contents to extension/popup directory
-    const extensionPopupDir = resolve(__dirname, "extension/popup");
+    const extensionPopupDir = popupOutputPath;
     if (!existsSync(extensionPopupDir)) {
       mkdirSync(extensionPopupDir, { recursive: true });
     }

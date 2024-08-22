@@ -14,27 +14,27 @@ import {
   getChildren,
   waitForAllElementPromise,
 } from "../utils/helpers/helpers.js";
-
-const sidebarParentSelector =
-  "div.relative.flex.h-full.w-full.overflow-hidden.transition-colors.z-0";
-
-const sidebarSelector =
-  "div.flex-shrink-0.overflow-x-hidden.bg-token-sidebar-surface-primary";
-
-const sidebarContentSelector = `${sidebarSelector} > div`;
-
-const chatsContainerSelector = "li > div > a";
+import {
+  sidebarParentSelector,
+  sidebarSelector,
+  sidebarContentSelector,
+  chatsContainerSelector,
+} from "./elementSelectors.js";
+import main from "./main.js";
 
 const getElements = async () => {
   try {
     const sidebarParent = await waitForElementPromise(sidebarParentSelector);
-    console.log("Sidebar Parent Element found:", sidebarParent);
+    // console.log("[getElements]: Sidebar Parent Element found:", sidebarParent);
 
     const sidebar = await waitForElementPromise(sidebarSelector);
-    console.log("Sidebar Element found:", sidebar);
+    // console.log("[getElements]: Sidebar Element found:", sidebar);
 
     const sidebarContent = await waitForElementPromise(sidebarContentSelector);
-    console.log("Sidebar Content Element found:", sidebarContent);
+    // console.log(
+    //   "[getElements]: Sidebar Content Element found:",
+    //   sidebarContent
+    // );
 
     const allChatsContainers =
       await waitForAllElementPromise<HTMLAnchorElement>(chatsContainerSelector);
@@ -54,7 +54,6 @@ getElements().then((elements) => {
     elements;
   // Sidebar parent
   sidebarParent.id = "sidebar-parent";
-  sidebarParent.classList.add("bg-red-500");
 
   // Sidebar
   sidebar.id = "sidebar";
@@ -72,6 +71,8 @@ getElements().then((elements) => {
       console.log("Chat Title: ", child.textContent);
     });
   });
+
+  main(elements);
 });
 
 // // Apply the resizable functionality to the sidebar
