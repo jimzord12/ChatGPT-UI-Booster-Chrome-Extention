@@ -13,6 +13,7 @@ import {
   waitForElementPromise,
   getChildren,
   waitForAllElementPromise,
+  getChild,
 } from "../utils/helpers/helpers.js";
 import {
   sidebarParentSelector,
@@ -67,9 +68,12 @@ getElements().then((elements) => {
   allChatsContainers.forEach((chatContainer, idx) => {
     console.log(`(${idx}) - ${chatContainer}`);
     chatContainer.classList.add("chat-container");
-    getChildren(chatContainer, "div").forEach((child) => {
-      console.log("Chat Title: ", child.textContent);
-    });
+
+    const chatTitle = getChild(chatContainer, "div:first-child");
+    if (!chatTitle) {
+      return;
+    }
+    console.log(`Chat Title (${idx}): `, chatTitle.textContent);
   });
 
   main(elements);

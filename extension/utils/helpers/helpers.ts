@@ -52,3 +52,7 @@ export const waitForAllElementPromise = async <T extends Element>(
 export const getChildren = (parentElement: HTMLElement, selector: string) => {
   return parentElement.querySelectorAll(selector);
 };
+
+export const getChild = (parentElement: HTMLElement, selector: string) => {
+  return parentElement.querySelector(selector);
+};
