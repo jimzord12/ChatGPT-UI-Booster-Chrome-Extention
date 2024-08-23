@@ -1,53 +1,25 @@
-// // Wait until the sidebar element is loaded
-// function waitForElement(selector, callback) {
-//   const interval = setInterval(() => {
-//     const element = document.querySelector(selector);
-//     if (element) {
-//       clearInterval(interval);
-//       callback(element);
-//     }
-//   }, 100);
-// }
+import {
+  AllChatsMapType,
+  ChatObject,
+  FetchedElements,
+} from "../types/types.js";
+import { getChild, getElements } from "../utils/helpers/helpers.js";
 
-import {
-  waitForElementPromise,
-  getChildren,
-  waitForAllElementPromise,
-  getChild,
-} from "../utils/helpers/helpers.js";
-import {
-  sidebarParentSelector,
-  sidebarSelector,
-  sidebarContentSelector,
-  chatsContainerSelector,
-} from "./elementSelectors.js";
 import main from "./main.js";
 
-const getElements = async () => {
-  try {
-    const sidebarParent = await waitForElementPromise(sidebarParentSelector);
-    // console.log("[getElements]: Sidebar Parent Element found:", sidebarParent);
+if (document.readyState === "loading") {
+  // Loading hasn't finished yet
+  document.addEventListener("DOMContentLoaded", () => {
+    getElements().then((elements) => prepareElements(elements));
+  });
+} else {
+  // `DOMContentLoaded` has already fired
+  getElements().then((elements) => prepareElements(elements));
+}
 
-    const sidebar = await waitForElementPromise(sidebarSelector);
-    // console.log("[getElements]: Sidebar Element found:", sidebar);
-
-    const sidebarContent = await waitForElementPromise(sidebarContentSelector);
-    // console.log(
-    //   "[getElements]: Sidebar Content Element found:",
-    //   sidebarContent
-    // );
-
-    const allChatsContainers =
-      await waitForAllElementPromise<HTMLAnchorElement>(chatsContainerSelector);
-
-    return { sidebarParent, sidebar, sidebarContent, allChatsContainers };
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
-getElements().then((elements) => {
+const prepareElements = (elements: FetchedElements) => {
   if (!elements) {
+    console.log("[getElements]: No Elements found :(");
     return;
   }
 
@@ -65,19 +37,43 @@ getElements().then((elements) => {
   sidebarContent.style.width = "500px";
 
   // All chats containers
-  allChatsContainers.forEach((chatContainer, idx) => {
+  const allChatsMap: AllChatsMapType = new Map<
+    string,
+    Omit<ChatObject, "id">
+  >();
+
+  Array.from(allChatsContainers).forEach((chatContainer, idx) => {
     console.log(`(${idx}) - ${chatContainer}`);
     chatContainer.classList.add("chat-container");
 
-    const chatTitle = getChild(chatContainer, "div:first-child");
-    if (!chatTitle) {
+    const chatId = chatContainer.getAttribute("href")?.replace("/c/", "");
+    console.log(`Chat ID (${idx}): `, chatId);
+
+    const innerDiv = getChild(chatContainer, "div:first-child");
+    if (!innerDiv) {
       return;
     }
-    console.log(`Chat Title (${idx}): `, chatTitle.textContent);
+
+    const title = innerDiv.textContent;
+    console.log(`Chat Title (${idx}): `, innerDiv.textContent);
+
+    if (chatId === undefined || title === null) return;
+
+    allChatsMap.set(chatId, {
+      title,
+      htmlRef: chatContainer,
+    });
   });
 
-  main(elements);
-});
+  const data = {
+    sidebarParent,
+    sidebar,
+    sidebarContent,
+    allChatsMap,
+  };
+
+  main(data);
+};
 
 // // Apply the resizable functionality to the sidebar
 // waitForElement(".sidebar-selector", (sidebar) => {

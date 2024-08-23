@@ -1,3 +1,34 @@
+import {
+  sidebarParentSelector,
+  sidebarSelector,
+  sidebarContentSelector,
+  chatsContainerSelector,
+} from "../../content/constants/elementSelectors";
+import { ChatObject } from "../../types/types";
+
+export const getElements = async () => {
+  try {
+    const sidebarParent = await waitForElementPromise(sidebarParentSelector);
+    // console.log("[getElements]: Sidebar Parent Element found:", sidebarParent);
+
+    const sidebar = await waitForElementPromise(sidebarSelector);
+    // console.log("[getElements]: Sidebar Element found:", sidebar);
+
+    const sidebarContent = await waitForElementPromise(sidebarContentSelector);
+    // console.log(
+    //   "[getElements]: Sidebar Content Element found:",
+    //   sidebarContent
+    // );
+
+    const allChatsContainers =
+      await waitForAllElementPromise<HTMLAnchorElement>(chatsContainerSelector);
+
+    return { sidebarParent, sidebar, sidebarContent, allChatsContainers };
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 export const waitForElement = (
   selector: string,
   callback: (element: HTMLElement) => void
