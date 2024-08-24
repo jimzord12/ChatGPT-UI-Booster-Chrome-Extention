@@ -7,3 +7,6 @@ export const sidebarSelector =
 export const sidebarContentSelector = `${sidebarSelector} > div`;
 
 export const chatsContainerSelector = "li > div > a";
+
+export const sidebarNavSelector =
+  "div.flex.justify-between.flex.h-\\[60px\\].items-center.md\\:h-14";

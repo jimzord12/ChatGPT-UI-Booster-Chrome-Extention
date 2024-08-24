@@ -1,4 +1,9 @@
-import { ChatGroupType, ChatObject, StateKey } from "../../types/types";
+import {
+  AllChatsMapType,
+  ChatGroupType,
+  ChatObject,
+  StateKey,
+} from "../../types/types";
 import { createNewChatGroup } from "../../utils/helpers/chat-group-manager";
 import { IdCounterSingleton } from "../id-counter/id-counter";
 
@@ -111,11 +116,29 @@ export default class StateManager {
     await this.setState("chatGroups", updatedGroups);
   }
 
-  async addChatToGroup(chat: ChatObject, group: ChatGroupType): Promise<void> {
+  async addChatToGroup(
+    chat: ChatObject,
+    group: ChatGroupType,
+    chatsMap: AllChatsMapType
+  ): Promise<void> {
     const groups = await this.getGroups();
     const desiredGroup = groups.find((grp) => grp.id === group.id);
     if (!desiredGroup) {
       throw new Error("Group not found");
+    }
+
+    const chatFromMap = chatsMap.get(chat.id);
+    if (!chatFromMap) {
+      throw new Error(
+        "[StateManager] -> [addChatToGroup]: Chat not found at AllChatsMap"
+      );
+    }
+
+    chatFromMap.grpId = group.id;
+
+    if (desiredGroup.chats.some((c) => c.id === chat.id)) {
+      console.error("Chat already exists in the group: ", chat);
+      return;
     }
 
     desiredGroup.chats.push(chat);
@@ -127,6 +150,10 @@ export default class StateManager {
     const desiredGroup = groups.find((grp) => chat.grpId === grp.id);
     if (!desiredGroup) {
       throw new Error("Group not found");
+    }
+
+    if (!desiredGroup.chats.some((c) => c.id === chat.id)) {
+      throw new Error("Chat not found in the group");
     }
 
     desiredGroup.chats = desiredGroup.chats.filter((c) => c.id !== chat.id);

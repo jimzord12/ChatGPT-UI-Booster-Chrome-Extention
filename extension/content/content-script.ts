@@ -1,3 +1,4 @@
+import { runInjectors } from "../lib/injectors/index.js";
 import {
   AllChatsMapType,
   ChatObject,
@@ -15,6 +16,7 @@ if (document.readyState === "loading") {
 } else {
   // `DOMContentLoaded` has already fired
   getElements().then((elements) => prepareElements(elements));
+  runInjectors();
 }
 
 const prepareElements = (elements: FetchedElements) => {

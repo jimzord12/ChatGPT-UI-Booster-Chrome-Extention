@@ -4,7 +4,7 @@ import {
   sidebarContentSelector,
   chatsContainerSelector,
 } from "../../content/constants/elementSelectors";
-import { ChatObject } from "../../types/types";
+import { AllChatsMapType, ChatObject } from "../../types/types";
 
 export const getElements = async () => {
   try {
@@ -86,4 +86,11 @@ export const getChildren = (parentElement: HTMLElement, selector: string) => {
 
 export const getChild = (parentElement: HTMLElement, selector: string) => {
   return parentElement.querySelector(selector);
+};
+
+export const addGroupColor = (chatsMap: AllChatsMapType) => {
+  for (const [chatId, chat] of chatsMap.entries()) {
+    
+    
+  }
 };
