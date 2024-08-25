@@ -13,3 +13,11 @@
 #sidebar-content.closed {
   transform: translateX(-100%);
 }
+
+.group-circle {
+  order: -1;
+  border-radius: 100%;
+  height: 16px;
+  width: 16px;
+  align-self: center;
+}

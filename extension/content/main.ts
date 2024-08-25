@@ -1,12 +1,12 @@
-import StateManager from "../lib/state-manager/stateManager";
 import { AllChatsMapType } from "../types/types";
 import { sidebarSelector } from "./constants/elementSelectors";
 import {
   createAttributesObserverCallback,
   createAttributesObserverForElement,
 } from "../lib/observers/attr-observer";
-import { createNewChatGroup } from "../utils/helpers/chat-group-manager";
 import { chatsAndGrpsTest } from "./test/chats-and-grps";
+import { init } from "./init";
+import stateManager from "../lib/state-manager/stateManager";
 
 interface ReceivedElements {
   sidebarParent: HTMLElement;
@@ -38,8 +38,8 @@ export default async function (elements: ReceivedElements) {
     return;
   }
 
-  // Intializing State Manager
-  const stateManager = await StateManager.getInstance(); // can be "local" or "sync", defaults to "local"
+  // Initialization
+  const { stateManager } = await init(allChatsMap);
 
   let userPrefs: any; //TODO: Replace any with actual type
   try {
@@ -48,8 +48,9 @@ export default async function (elements: ReceivedElements) {
     console.error("[StateManager Error]: ", error);
   }
 
-  // This is currently written for testing. This will be replaced with the actual logic from user's prefs
+  // 🧪 This is currently written for testing. This will be replaced with the actual logic from user's prefs
   const applySidebarMods = () => {
+    // If the Sidebar is closed...
     if (sidebar.style.visibility === "hidden") {
       sidebar.classList.add("closed");
       sidebar.style.width = "0px";

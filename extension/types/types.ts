@@ -32,3 +32,9 @@ export type IdCounter = {
   reset: () => number;
   specify: (num: number) => number;
 };
+
+export type userPrefs = {
+  enabled: boolean;
+  sidebarWidth: number;
+  contentWidth: number;
+};
