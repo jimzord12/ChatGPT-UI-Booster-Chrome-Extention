@@ -20,7 +20,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["dist/content/content-script.js"],
-      "css": ["dist/content/content-script.css"]
+      "css": ["dist/content/content-script.css", "dist/content/nano.min.css"]
     }
   ],
   "permissions": ["storage", "activeTab", "scripting"]

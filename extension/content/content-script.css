@@ -16,8 +16,9 @@
 
 .group-circle {
   order: -1;
-  border-radius: 100%;
+  border-radius: 50%;
   height: 16px;
   width: 16px;
   align-self: center;
+  cursor: pointer;
 }

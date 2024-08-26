@@ -1,6 +1,12 @@
 import { consoleStyles } from "../../content/constants/console-styles";
+import { createNewColorPicker } from "../../lib/colorPicker/createPickr";
 import { IdCounterSingleton } from "../../lib/id-counter/id-counter";
-import { AllChatsMapType, ChatGroupType, ChatObject } from "../../types/types";
+import {
+  AllChatsMapType,
+  ChatGroupType,
+  ChatObject,
+  PickrRoot,
+} from "../../types/types";
 
 /**
  * Creates a new chat group.
@@ -28,7 +34,7 @@ function generateColorBasedOnId(id: number) {
   return `hsl(${hue}, ${sat}%, ${light}%)`;
 }
 // Adding grp info to Chats (At Init)
-export function attachMetadataToChats(
+export async function attachMetadataToChats(
   allChatsMap: AllChatsMapType,
   allGrps: ChatGroupType[]
 ) {
@@ -54,7 +60,7 @@ export function attachMetadataToChats(
   }
 }
 
-function modifyChatHTMLElement(
+async function modifyChatHTMLElement(
   chat: Omit<ChatObject, "id">,
   chatGrp: ChatGroupType
 ) {
@@ -63,10 +69,45 @@ function modifyChatHTMLElement(
   chat.htmlRef.setAttribute("data-grp-id", chatGrp.id.toString());
 
   // 2. Create the ChatGroup Identifier and append it to the chat
-  const grpColorCircleDiv = document.createElement("div");
-  grpColorCircleDiv.style.backgroundColor = chatGrp.color;
-  grpColorCircleDiv.classList.add("group-circle");
-  chat.htmlRef.appendChild(grpColorCircleDiv);
+  const colorPickerContainer = document.createElement("div");
+  chat.htmlRef.appendChild(colorPickerContainer);
+
+  const pickrInstance = await createNewColorPicker(
+    colorPickerContainer,
+    (selectedColor) => {
+      console.log(
+        "%cYOU SELECTED THIS COLOR: ",
+        consoleStyles.highlight,
+        selectedColor
+      );
+    }
+  );
+
+  const colorPickerRoot = pickrInstance?.getRoot() as PickrRoot;
+  if (!colorPickerRoot) {
+    console.log("colorPickerRoot: ", colorPickerRoot);
+    throw new Error("[modifyChatHTMLElement]: Problem with Color Picker HTML");
+  }
+  console.log("colorPickerRoot: ", colorPickerRoot);
+
+  const pickrBtn = colorPickerRoot.button;
+
+  pickrBtn.style.cssText = `--pcr-color: ${chatGrp.color}`;
+  pickrBtn.classList.add("group-circle");
+
+  // chat.htmlRef.appendChild(grpColorCircleDiv);
+
+  console.log("%c children: ", consoleStyles.highlight, chat.htmlRef.children);
+
+  // chat.htmlRef.appendChild(grpColorCircleDiv);
+
+  // Manually trigger Coloris on click
+  colorPickerHTML.addEventListener("click", () => {
+    console.log(
+      "%c(Personal OnClick handler): Clicked the Color Picker!",
+      consoleStyles.info
+    );
+  });
 
   console.log("%c🐱‍👤 Modifycation Completed", consoleStyles.success);
 }

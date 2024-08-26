@@ -104,6 +104,8 @@ export default async function (elements: ReceivedElements) {
     }
   });
 
+
+
   // 🧪 For testing purposes
   //TODO: I future create a Vitest for this
   chatsAndGrpsTest(allChatsMap, stateManager);
