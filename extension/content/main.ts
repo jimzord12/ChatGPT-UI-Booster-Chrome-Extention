@@ -1,4 +1,4 @@
-import { AllChatsMapType } from "../types/types";
+import { AllChatsMapType, UserPrefs } from "../types/types";
 import { sidebarSelector } from "./constants/elementSelectors";
 import {
   createAttributesObserverCallback,
@@ -6,7 +6,6 @@ import {
 } from "../lib/observers/attr-observer";
 import { chatsAndGrpsTest } from "./test/chats-and-grps";
 import { init } from "./init";
-import stateManager from "../lib/state-manager/stateManager";
 
 interface ReceivedElements {
   sidebarParent: HTMLElement;
@@ -41,9 +40,12 @@ export default async function (elements: ReceivedElements) {
   // Initialization
   const { stateManager } = await init(allChatsMap);
 
-  let userPrefs: any; //TODO: Replace any with actual type
+  let userPrefs: UserPrefs | undefined; //TODO: Replace any with actual type
   try {
     userPrefs = await stateManager.getState("userPrefs");
+    if (!userPrefs) {
+      console.log("Main: Could not find userPrefs");
+    }
   } catch (error) {
     console.error("[StateManager Error]: ", error);
   }
@@ -103,8 +105,6 @@ export default async function (elements: ReceivedElements) {
           };
     }
   });
-
-
 
   // 🧪 For testing purposes
   //TODO: I future create a Vitest for this

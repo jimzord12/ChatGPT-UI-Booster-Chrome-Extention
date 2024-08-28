@@ -12,6 +12,12 @@ export type ChatGroupType = {
   color: string;
 };
 
+export type UserPrefs = {
+  enabled: boolean;
+  sidebarWidth: number;
+  contentWidth: number;
+};
+
 export type AllChatsMapType = Map<string, Omit<ChatObject, "id">>;
 
 export type FetchedElements =

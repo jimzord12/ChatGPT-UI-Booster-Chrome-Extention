@@ -29,7 +29,7 @@ export const createAttributesObserverCallback = (
   attribute: string,
   logic: (mutation?: MutationRecord) => void
 ): MutationCallback => {
-  return (mutationsList, observer) => {
+  return (mutationsList, _) => {
     for (const mutation of mutationsList) {
       if (mutation.type === "attributes") {
         console.log(

@@ -5,9 +5,11 @@ export async function chatsAndGrpsTest(
   allChatsMap: AllChatsMapType,
   stateManager: StateManager
 ) {
+  console.log("🧪 TESTING - CHATS AND GROUPS");
   try {
     await stateManager.addGroup("Test Chat Group 1");
     await stateManager.addGroup("Test Chat Group 2");
+    console.log("🧪 + ✅ Groups added");
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -19,6 +21,11 @@ export async function chatsAndGrpsTest(
 
   const chat_2_ID = AllChatsMapEntries[1][0];
   // let chat_2 = AllChatsMapEntries[1][0];
+
+  console.log("🧪 + Chat 1 ID: ", chat_1_ID);
+  console.log("🧪 + Chat 1 Title: ", allChatsMap.get(chat_1_ID)?.title);
+  console.log("🧪 + Chat 2 ID: ", chat_2_ID);
+  console.log("🧪 + Chat 2 Title: ", allChatsMap.get(chat_2_ID)?.title);
 
   // Add one chat to each group
   // const chatId_1 = "4a327c77-4383-4d77-b675-68d888434805";

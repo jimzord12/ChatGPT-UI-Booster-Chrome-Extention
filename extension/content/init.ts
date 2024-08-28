@@ -13,6 +13,7 @@ export const init = async (allChatsMap: AllChatsMapType) => {
 
   console.log("%cInitialzing Chats", consoleStyles.info);
   const allStoredGroups = await stateManager.getGroups();
+  console.log("All Stored Groups: ", allStoredGroups);
   await attachMetadataToChats(allChatsMap, allStoredGroups);
 
   console.log();

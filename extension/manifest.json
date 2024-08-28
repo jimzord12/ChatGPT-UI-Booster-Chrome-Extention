@@ -20,7 +20,13 @@
     {
       "matches": ["<all_urls>"],
       "js": ["dist/content/content-script.js"],
-      "css": ["dist/content/content-script.css", "dist/content/nano.min.css"]
+      "css": ["dist/content/content-script.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/content/web-components/*/*.js"],
+      "matches": ["<all_urls>"]
     }
   ],
   "permissions": ["storage", "activeTab", "scripting"]
