@@ -1,9 +1,5 @@
 import { injectAll } from "../lib/injectors/index.js";
-import {
-  AllChatsMapType,
-  ChatObject,
-  FetchedElements,
-} from "../types/types.js";
+import { AllChatsMapType, ChatObject, FetchedElements } from "./types/types.js";
 import { getChild, getElements } from "../utils/helpers/helpers.js";
 
 import main from "./main.js";

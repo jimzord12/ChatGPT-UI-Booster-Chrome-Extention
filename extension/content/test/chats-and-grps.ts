@@ -1,5 +1,5 @@
 import StateManager from "../../lib/state-manager/stateManager";
-import { AllChatsMapType } from "../../types/types";
+import { AllChatsMapType } from "../types/types";
 
 export async function chatsAndGrpsTest(
   allChatsMap: AllChatsMapType,

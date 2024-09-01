@@ -4,7 +4,7 @@ import {
   sidebarContentSelector,
   chatsContainerSelector,
 } from "../../content/constants/elementSelectors";
-import { AllChatsMapType } from "../../types/types";
+import { AllChatsMapType } from "../../content/types/types";
 
 export const getElements = async () => {
   try {

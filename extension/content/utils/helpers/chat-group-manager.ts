@@ -1,7 +1,11 @@
 import { consoleStyles } from "../../content/constants/console-styles";
 import { IdCounterSingleton } from "../../lib/id-counter/id-counter";
 // import StateManager from "../../lib/state-manager/stateManager";
-import { AllChatsMapType, ChatGroupType, ChatObject } from "../../types/types";
+import {
+  AllChatsMapType,
+  ChatGroupType,
+  ChatObject,
+} from "../../content/types/types";
 
 /**
  * Creates a new chat group.

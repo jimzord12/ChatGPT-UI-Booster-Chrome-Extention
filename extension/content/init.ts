@@ -1,6 +1,6 @@
 import StateManager from "../lib/state-manager/stateManager";
 // import "../dist/content/nano.min.css"; // 'nano' theme
-import { AllChatsMapType } from "../types/types";
+import { AllChatsMapType } from "./types/types";
 import { attachMetadataToChats } from "../utils/helpers/chat-group-manager";
 import { consoleStyles } from "./constants/console-styles";
 

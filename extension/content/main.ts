@@ -1,4 +1,4 @@
-import { AllChatsMapType, UserPrefs } from "../types/types";
+import { AllChatsMapType, UserPrefs } from "./types/types";
 import { sidebarSelector } from "./constants/elementSelectors";
 import {
   createAttributesObserverCallback,
